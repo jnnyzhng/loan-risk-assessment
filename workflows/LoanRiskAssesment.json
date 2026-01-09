@@ -1,0 +1,825 @@
+{
+  "name": "NYP Assigment 122",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload your data to test RAG",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Upload your file(s)",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv, .json, .txt",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        64
+      ],
+      "id": "4411c969-710c-4703-a2a2-49e920f53e00",
+      "name": "Upload your file here",
+      "webhookId": "8cc404b8-0e70-4b71-a5bb-9a26dbd1403f"
+    },
+    {
+      "parameters": {
+        "content": "### 📚 1. Load Data Flow\nLoad your data into a vector database with the 📚 **Load Data** flow, and then use your data as chat context with the 🐕 **Retriever** flow.",
+        "height": 684,
+        "width": 796,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -208,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "961bb4de-c5cb-4749-9ec8-7deea6354d1a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "mode": "=hostedChat",
+        "initialMessages": "I'm AI Loan Risk Analyst. How can I assist you today?",
+        "options": {
+          "title": "AI Loan Risk Analyst Chatbot",
+          "customCss": "@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap');\n\n:root {\n  /* ============================================\n     LOAN APPLICATION FORM THEME - n8n Chat CSS\n     ============================================ */\n\n  /* Colors - Matching Loan Application Form */\n  --chat--color-primary: #1e3a5f;                    /* Dark navy blue - main brand color */\n  --chat--color-primary-shade-50: #2d5a87;           /* Lighter navy blue */\n  --chat--color-primary-shade-100: #163049;          /* Darker navy blue */\n  --chat--color-secondary: #28a745;                  /* Green - for user messages */\n  --chat--color-secondary-shade-50: #20c997;         /* Teal green */\n  --chat--color-white: #ffffff;\n  --chat--color-light: #f5f7fa;                      /* Light gray background */\n  --chat--color-light-shade-50: #e8ecf1;             /* Border color */\n  --chat--color-light-shade-100: #dde2e8;            /* Input border */\n  --chat--color-medium: #d2d4d9;\n  --chat--color-dark: #1e3a5f;                       /* Dark navy */\n  --chat--color-disabled: #777980;\n  --chat--color-typing: #555555;\n\n  /* Base Layout */\n  --chat--spacing: 1rem;\n  --chat--border-radius: 12px;                       /* Rounded corners like the form */\n  --chat--transition-duration: 0.2s;\n  \n  /* Font Family - Matching website */\n  --chat--font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n\n  /* Window Dimensions */\n  --chat--window--width: 400px;\n  --chat--window--height: 600px;\n  --chat--window--bottom: var(--chat--spacing);\n  --chat--window--right: var(--chat--spacing);\n  --chat--window--z-index: 9999;\n  --chat--window--border: 1px solid var(--chat--color-light-shade-50);\n  --chat--window--border-radius: var(--chat--border-radius);\n  --chat--window--margin-bottom: var(--chat--spacing);\n\n  /* Header Styles - Gradient like the form header */\n  --chat--header-height: auto;\n  --chat--header--padding: 1.25rem var(--chat--spacing);\n  --chat--header--background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);\n  --chat--header--color: var(--chat--color-white);\n  --chat--header--border-top: none;\n  --chat--header--border-bottom: none;\n  --chat--header--border-left: none;\n  --chat--header--border-right: none;\n  --chat--heading--font-size: 1.25em;\n  --chat--subtitle--font-size: 0.85em;\n  --chat--subtitle--line-height: 1.6;\n\n  /* Message Styles */\n  --chat--message--font-size: 0.95rem;\n  --chat--message--padding: 0.875rem 1rem;\n  --chat--message--border-radius: 10px;\n  --chat--message-line-height: 1.5;\n  --chat--message--margin-bottom: 0.75rem;\n  \n  /* Bot Messages - White card style */\n  --chat--message--bot--background: var(--chat--color-white);\n  --chat--message--bot--color: #333333;\n  --chat--message--bot--border: 1px solid var(--chat--color-light-shade-50);\n  \n  /* User Messages - Green like the Print button */\n  --chat--message--user--background: linear-gradient(135deg, #28a745 0%, #20c997 100%);\n  --chat--message--user--color: #333334;\n  --chat--message--user--border: none;\n  \n  /* Code blocks */\n  --chat--message--pre--background: #f0f2f5;\n  --chat--messages-list--padding: var(--chat--spacing);\n\n  /* Toggle Button - Navy blue like form header */\n  --chat--toggle--size: 60px;\n  --chat--toggle--width: var(--chat--toggle--size);\n  --chat--toggle--height: var(--chat--toggle--size);\n  --chat--toggle--border-radius: 50%;\n  --chat--toggle--background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);\n  --chat--toggle--hover--background: linear-gradient(135deg, #2d5a87 0%, #3d6a97 100%);\n  --chat--toggle--active--background: linear-gradient(135deg, #163049 0%, #1e3a5f 100%);\n  --chat--toggle--color: var(--chat--color-white);\n\n  /* Input Area - Matching form inputs */\n  --chat--textarea--height: 52px;\n  --chat--textarea--max-height: 150px;\n  --chat--input--font-size: 0.95rem;\n  --chat--input--border: 1px solid var(--chat--color-light-shade-100);\n  --chat--input--border-radius: 8px;\n  --chat--input--padding: 0.75rem 1rem;\n  --chat--input--background: #fafbfc;\n  --chat--input--text-color: #333333;\n  --chat--input--line-height: 1.5;\n  --chat--input--placeholder--font-size: var(--chat--input--font-size);\n  --chat--input--border-active: 1px solid var(--chat--color-primary-shade-50);\n  --chat--input--left--panel--width: 2.5rem;\n\n  /* Button Styles - Navy blue theme */\n  --chat--button--color: var(--chat--color-white);\n  --chat--button--background: var(--chat--color-primary);\n  --chat--button--padding: 0.5rem 1rem;\n  --chat--button--border-radius: 8px;\n  --chat--button--hover--color: var(--chat--color-white);\n  --chat--button--hover--background: var(--chat--color-primary-shade-50);\n  --chat--close--button--color-hover: var(--chat--color-primary);\n\n  /* Send Button - Green accent */\n  --chat--input--send--button--background: transparent;\n  --chat--input--send--button--color: var(--chat--color-primary);\n  --chat--input--send--button--background-hover: var(--chat--color-light);\n  --chat--input--send--button--color-hover: var(--chat--color-secondary);\n  \n  /* File Button */\n  --chat--input--file--button--background: transparent;\n  --chat--input--file--button--color: var(--chat--color-primary-shade-50);\n  --chat--input--file--button--background-hover: var(--chat--color-light);\n  --chat--input--file--button--color-hover: var(--chat--color-primary);\n  --chat--files-spacing: 0.25rem;\n\n  /* Body and Footer */\n  --chat--body--background: var(--chat--color-light);\n  --chat--footer--background: var(--chat--color-white);\n  --chat--footer--color: var(--chat--color-dark);\n}\n\n/* ============================================\n   CUSTOM CLASS OVERRIDES\n   ============================================ */\n\n/* Chat Window Container */\n.chat-window {\n  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.15) !important;\n  border-radius: 12px !important;\n  overflow: hidden !important;\n}\n\n/* Header Styling */\n.chat-header {\n  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%) !important;\n  padding: 1rem 1.25rem !important;\n}\n\n.chat-header h1,\n.chat-header .chat-heading {\n  font-weight: 600 !important;\n  font-size: 1.1rem !important;\n  letter-spacing: 0.02em !important;\n}\n\n.chat-header .chat-subtitle {\n  opacity: 0.9 !important;\n  font-size: 0.8rem !important;\n}\n\n/* Message Bubbles */\n.chat-message {\n  max-width: 85% !important;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;\n}\n\n.chat-message-bot {\n  background: #ffffff !important;\n  color: #333333 !important;\n  border: 1px solid #e8ecf1 !important;\n  border-radius: 12px 12px 12px 4px !important;\n}\n\n.chat-message-user {\n  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;\n  color: #ffffff !important;\n  border: none !important;\n  border-radius: 12px 12px 4px 12px !important;\n}\n\n/* Messages Container */\n.chat-messages-list {\n  padding: 1rem !important;\n  background: #f5f7fa !important;\n}\n\n/* Input Area */\n.chat-input {\n  background: #ffffff !important;\n  border-top: 1px solid #e8ecf1 !important;\n  padding: 0.75rem !important;\n}\n\n.chat-input textarea {\n  background: #fafbfc !important;\n  border: 1px solid #dde2e8 !important;\n  border-radius: 8px !important;\n  padding: 0.75rem 1rem !important;\n  font-size: 0.95rem !important;\n  transition: border-color 0.2s, background 0.2s !important;\n}\n\n.chat-input textarea:focus {\n  background: #ffffff !important;\n  border-color: #2d5a87 !important;\n  outline: none !important;\n  box-shadow: 0 0 0 3px rgba(45, 90, 135, 0.1) !important;\n}\n\n.chat-input textarea::placeholder {\n  color: #999 !important;\n}\n\n/* Send Button */\n.chat-input-send-button {\n  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%) !important;\n  color: #ffffff !important;\n  border-radius: 8px !important;\n  width: 40px !important;\n  height: 40px !important;\n  transition: transform 0.2s, box-shadow 0.2s !important;\n}\n\n.chat-input-send-button:hover {\n  transform: scale(1.05) !important;\n  box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3) !important;\n}\n\n.chat-input-send-button svg {\n  fill: #ffffff !important;\n}\n\n/* Toggle Button */\n.chat-toggle-button {\n  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%) !important;\n  box-shadow: 0 4px 15px rgba(30, 58, 95, 0.35) !important;\n  transition: transform 0.2s, box-shadow 0.2s !important;\n}\n\n.chat-toggle-button:hover {\n  transform: scale(1.08) !important;\n  box-shadow: 0 6px 20px rgba(30, 58, 95, 0.45) !important;\n}\n\n/* Close Button in Header */\n.chat-close-button {\n  background: rgba(255, 255, 255, 0.15) !important;\n  border-radius: 6px !important;\n  transition: background 0.2s !important;\n}\n\n.chat-close-button:hover {\n  background: rgba(255, 255, 255, 0.25) !important;\n}\n\n/* Typing Indicator */\n.chat-typing-indicator {\n  color: #555555 !important;\n  font-style: italic !important;\n  font-size: 0.85rem !important;\n}\n\n/* Scrollbar Styling */\n.chat-messages-list::-webkit-scrollbar {\n  width: 6px !important;\n}\n\n.chat-messages-list::-webkit-scrollbar-track {\n  background: #f5f7fa !important;\n}\n\n.chat-messages-list::-webkit-scrollbar-thumb {\n  background: #c2c5cc !important;\n  border-radius: 3px !important;\n}\n\n.chat-messages-list::-webkit-scrollbar-thumb:hover {\n  background: #a0a4ac !important;\n}\n\n/* File Upload Area */\n.chat-files-list {\n  background: #f5f7fa !important;\n  border-radius: 8px !important;\n  padding: 0.5rem !important;\n}\n\n/* Links in Messages */\n.chat-message a {\n  color: #2d5a87 !important;\n  text-decoration: underline !important;\n}\n\n.chat-message-user a {\n  color: #ffffff !important;\n}\n\n/* Code Blocks */\n.chat-message pre,\n.chat-message code {\n  background: #f0f2f5 !important;\n  border-radius: 6px !important;\n  padding: 0.5rem 0.75rem !important;\n  font-family: 'Consolas', 'Monaco', monospace !important;\n  font-size: 0.85rem !important;\n}\n\n/* Powered By Footer (if visible) */\n.chat-footer {\n  background: #ffffff !important;\n  border-top: 1px solid #e8ecf1 !important;\n  padding: 0.5rem !important;\n  font-size: 0.75rem !important;\n  color: #777 !important;\n}\n\n/* Initial Welcome/Greeting Area */\n.chat-greeting {\n  text-align: center !important;\n  padding: 1.5rem !important;\n}\n\n.chat-greeting h2 {\n  color: #1e3a5f !important;\n  font-weight: 600 !important;\n  margin-bottom: 0.5rem !important;\n}\n\n.chat-greeting p {\n  color: #555 !important;\n  font-size: 0.9rem !important;\n}\n\n/* Button Styles for Quick Replies */\n.chat-quick-reply {\n  background: #ffffff !important;\n  border: 1px solid #1e3a5f !important;\n  color: #1e3a5f !important;\n  border-radius: 20px !important;\n  padding: 0.5rem 1rem !important;\n  font-size: 0.85rem !important;\n  transition: all 0.2s !important;\n}\n\n.chat-quick-reply:hover {\n  background: #1e3a5f !important;\n  color: #ffffff !important;\n}\n\n/* Avatar Styling */\n.chat-avatar {\n  width: 32px !important;\n  height: 32px !important;\n  border-radius: 50% !important;\n  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%) !important;\n}\n\n/* Timestamp */\n.chat-message-timestamp {\n  font-size: 0.7rem !important;\n  color: #999 !important;\n  margin-top: 0.25rem !important;\n}\n\n/* Loading Spinner */\n.chat-loading {\n  color: #1e3a5f !important;\n}\n\n/* Error Messages */\n.chat-error {\n  background: #f8d7da !important;\n  color: #721c24 !important;\n  border: 1px solid #f5c6cb !important;\n  border-radius: 8px !important;\n  padding: 0.75rem !important;\n}\n\n/* Success Messages */\n.chat-success {\n  background: #d4edda !important;\n  color: #155724 !important;\n  border: 1px solid #c3e6cb !important;\n  border-radius: 8px !important;\n  padding: 0.75rem !important;\n}",
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        96
+      ],
+      "id": "487a8c3e-ce09-4f71-8bb8-b3aed40bc8d6",
+      "name": "When chat message received",
+      "webhookId": "ad2bd9e0-ef4f-4fdf-a92f-2d4f1a4c5f0f"
+    },
+    {
+      "parameters": {
+        "content": "### Embeddings\n\nThe Insert and Retrieve operation use the same embedding node.\n\nThis is to ensure that they are using the **exact same embeddings and settings**.\n\nDifferent embeddings might not work at all, or have unintended consequences.\n",
+        "height": 240,
+        "width": 432,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -656,
+        304
+      ],
+      "typeVersion": 1,
+      "id": "73a9b6e6-4d7f-4be8-83c6-e8a6185a4df2",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2384,
+        512
+      ],
+      "id": "0bd09c7e-fa67-4c11-ae3a-e88e6e704c7b",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PkzqiBRA5f3lyqTl",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        352
+      ],
+      "id": "56108de1-fdad-4623-b0b7-3029a61ac253",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PkzqiBRA5f3lyqTl",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {
+          "splitPages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        368
+      ],
+      "id": "3280946d-2e3b-46d5-b7a8-32149b43ef2b",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2080,
+        304
+      ],
+      "id": "ef512103-38a0-449b-87d9-cab5d6f3fd12",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "p0yKk2KU54cgiSKB",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        64
+      ],
+      "id": "0ed17fe8-dd3c-4477-8879-19e4abe68b09",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2272,
+        320
+      ],
+      "id": "bea773dd-871a-484b-8349-d0887fe4e3cc",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Retrieve information from knowledge base documents",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        2384,
+        336
+      ],
+      "id": "a2ad90dd-b3a4-49e5-984b-41adb14f160a",
+      "name": "Simple Vector Store1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Customer_Account_Status"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        3008,
+        320
+      ],
+      "id": "d5f8e9f2-65a4-4b1c-9d83-8311ff4fa22f",
+      "name": "Customer_Account_Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "27Cr8XaoyOZEytQt",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Customer_Credit_Score"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2672,
+        320
+      ],
+      "id": "8b360f33-a846-48c6-aa7c-49802e1fb654",
+      "name": "Customer_Credit_Score",
+      "credentials": {
+        "supabaseApi": {
+          "id": "27Cr8XaoyOZEytQt",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.guardrailsInput }}",
+        "options": {
+          "systemMessage": "=### ROLE\nYou are an intelligent Loan Risk Analyst. Your task is to process loan applications by retrieving customer data, consulting policy documents, and generating a risk assessment report. You must follow the bank's strict compliance workflow.\n\n### TOOLS & DATA SOURCES\n1. **Credit_Score_System**: Returns Credit Score (e.g., 455, 840).\n2. **Account_Status_System**: Returns Account Standing (e.g., 'good-standing', 'closed', 'delinquent') and Nationality (e.g., 'Singaporean', 'Non-Singaporean').\n3. **Government_PR_System**: Returns Permanent Resident status ('true'/'false'). ONLY use this for Non-Singaporeans.\n4. **Vector Store**: Contains the \"Bank Loan Overall Risk Policy\" and \"Bank Loan Interest Rate Policy\". You must search this to find the rules for mapping scores to risk levels and interest rates.\n\n### STRICT WORKFLOW INSTRUCTIONS\nYou must execute these steps in order for every user, as per the business requirements:\n\n**STEP 1: Retrieve Core Data**\n- Call `Credit_Score_System` and `Account_Status_System` to get the applicant's details.\n\n**STEP 2: Residency Validation (CRITICAL)**\n- Check the `Nationality` retrieved in Step 1.\n- **IF** Nationality is \"Singaporean\": Proceed to Step 3.\n- **IF** Nationality is \"Non-Singaporean\":\n   - You MUST call `Government_PR_System`.\n   - If `PR Status` is 'false': **STOP**. The applicant is ineligible. Generate a rejection report immediately (cite: \"Non-Singaporean without PR\").\n   - If `PR Status` is 'true': Proceed to Step 3.\n\n**STEP 3: Determine Risk Level**\n- Search the **Vector Store** for \"Risk Categorization Policy\".\n- Use the retrieved rules to determine the `Overall Risk` (Low, Medium, or High) based on the applicant's `Credit Score` and `Account Status`.\n\n**STEP 4: Determine Interest Rate**\n- Search the **Vector Store** for \"Interest Rate Policy\".\n- Map the `Overall Risk` level from Step 3 to the correct percentage (e.g., 4.885%, 3.175%).\n\n**STEP 5: Generate Final Report**\n- Evaluate the `Overall Risk` determined in Step 3.\n- **Rule:** If Risk is \"Low\" or \"Medium\", the decision is [RECOMMENDED].\n- **Rule:** If Risk is \"High\" (or policy forbids), the decision is [NOT RECOMMENDED].\n- Output the structured decision note.\n\n### RESPONSE FORMAT\n\"**Loan Risk Assessment Report**\n- Applicant:[Name]\n- Applicant NRIC: [ID Number]\n\n**Data Retrieved:**\n- Score: [Value]\n- Status: [Value]\n- Nationality: [Value] (PR: [True/False/NA])\n\n**Assessment:**\n- Risk Level: [Low/Medium/High] (Based on Policy)\n- Applicable Rate: [%]\n\n**Final Decision:**\n[RECOMMENDED / NOT RECOMMENDED]\n**Rationale:** [Explain logic. E.g., 'Although credit score is high, applicant is Non-Singaporean without PR status', or 'Score and status meet Medium Risk criteria.']\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2240,
+        80
+      ],
+      "id": "cd5a621d-bd72-4ac3-b93c-2c7e0ba2570a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "Government_PR_Status"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        2832,
+        320
+      ],
+      "id": "c4d006ca-5007-4558-9241-07e6d3a15dfe",
+      "name": "Government PR Status",
+      "credentials": {
+        "supabaseApi": {
+          "id": "27Cr8XaoyOZEytQt",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sanitize",
+        "text": "={{ $json.guardrailsInput.replace(/(\\bNRIC:\\s*)([STFG])(\\d{4})(\\d{3})([A-Z])\\b/g, '$1$2XXXX$4$5') }}\n",
+        "guardrails": {
+          "pii": {
+            "value": {
+              "type": "all"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.guardrails",
+      "typeVersion": 2,
+      "position": [
+        4160,
+        96
+      ],
+      "id": "1ba4ad77-085d-4ff2-ae38-2b2e1cdb39ef",
+      "name": "Guardrails"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aed8d2f7-7ddf-4522-a164-744adfbc6dab",
+              "name": "output",
+              "value": "={{ $json.guardrailsInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4464,
+        96
+      ],
+      "id": "eceacfaa-6315-494c-b2c1-e8fb5ef989ea",
+      "name": "Output"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4fed165e-dfa3-4ad3-af5f-bf3ac8aff363",
+              "name": "=Output",
+              "value": "={{ \"I can help with bank-loan risk assessment and related policy/workflow questions. Your last message looks outside that scope. Please rephrase your question about loan eligibility, risk level, interest rates, or the application workflow.\" }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3520,
+        240
+      ],
+      "id": "eefbb742-e743-400f-b273-94b70d1eb3e4",
+      "name": "Failed Message"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.output }}",
+        "guardrails": {
+          "topicalAlignment": {
+            "value": {
+              "threshold": 1,
+              "prompt": "=You are a Strict Compliance Officer for a banking loan system. Your ONLY job is to validate if user input falls within the defined BUSINESS SCOPE.\n\n### BUSINESS SCOPE\n- ALLOWED: Bank loan risk assessment, loan eligibility, credit scores, PR/NRIC handling, account status, interest rates, risk categories, application workflow.\n- FORBIDDEN: Sports (badminton, etc.), recipes, coding unrelated to workflow, general chit-chat, weather, politics.\n\n### INSTRUCTIONS\n1. Analyze the INPUT below.\n2. Determine if the content is completely within the ALLOWED scope.\n3. You must output your decision in valid JSON format only.\n4. Do not output markdown, explanations, or chat. ONLY the JSON.\n\n### REQUIRED OUTPUT FORMAT\n{\n  \"is_allowed\": boolean,\n  \"reason\": \"Short explanation of why\"\n}\n\n### INPUT\n\"{{ $json.output }}\""
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.guardrails",
+      "typeVersion": 2,
+      "position": [
+        3248,
+        96
+      ],
+      "id": "278678f5-68ba-4785-8b6c-0f4ebac40451",
+      "name": "Guardrails_CheckQuestions"
+    },
+    {
+      "parameters": {
+        "content": "### 4. Check Input Text using Guardrail\nWhen user asking question, this Guardrail will validate the text if this are align with the context of business.",
+        "height": 864,
+        "width": 864
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3184,
+        -48
+      ],
+      "id": "31e44f20-76e6-4015-8354-41c71face451",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "### 4. Sanitize Text and Validate PII information",
+        "height": 864,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4064,
+        -48
+      ],
+      "id": "a04d671c-a5e2-4803-9374-9640cf1ffe7b",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "### 🐕 3. Retriever Flow\nRetrieve data from vector db and call tools \n1. **Credit_Score_System**\n2. **Account_Status_System**\n3. **Government_PR_System**\n.",
+        "height": 876,
+        "width": 1320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1856,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "92969720-96b1-46c5-888f-aa314e249eec",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### 5. Display Final Output Chat Results",
+        "height": 864,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4384,
+        -48
+      ],
+      "id": "80388696-b123-47e0-ac63-35adcee4d169",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        320
+      ],
+      "id": "2fa06829-d0df-4ff2-8a7a-9a6f642fc97f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PkzqiBRA5f3lyqTl",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### 2. Check Input Text using Guardrail\nWhen user asking question, this Guardrail will validate the text to prevent any jailbreak",
+        "height": 864,
+        "width": 864
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -48
+      ],
+      "id": "e9452cbe-65ed-4a6a-bd1d-dbe5adad5216",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        368
+      ],
+      "id": "91a9b6be-3abc-41c8-8495-6563874c725d",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PkzqiBRA5f3lyqTl",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4fed165e-dfa3-4ad3-af5f-bf3ac8aff363",
+              "name": "=Output",
+              "value": "={{ \"I am unable to fulfill this request as it falls outside my safety guidelines or operational scope\" }}\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1312,
+        288
+      ],
+      "id": "b9e59b82-e29c-4801-bf71-13a3eea507a7",
+      "name": "Failed Message1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aed8d2f7-7ddf-4522-a164-744adfbc6dab",
+              "name": "output",
+              "value": "={{ $json.Output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1536,
+        288
+      ],
+      "id": "1958d43d-fd4c-40bb-a6bd-5600ae3c5754",
+      "name": "Output_Jailbreak"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "aed8d2f7-7ddf-4522-a164-744adfbc6dab",
+              "name": "output",
+              "value": "={{ $json.Output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        240
+      ],
+      "id": "128e6b70-7c2a-4606-b2e7-6e64aca1a063",
+      "name": "Output_TopicAlignment"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.chatInput }}",
+        "guardrails": {
+          "jailbreak": {
+            "value": {
+              "threshold": 0.7
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.guardrails",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        96
+      ],
+      "id": "ae268700-9a0e-4a29-ac3b-f33e4b0b77aa",
+      "name": "Guardrails_CheckJailbreak"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Upload your file here": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Guardrails_CheckJailbreak",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer_Account_Status": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer_Credit_Score": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Government PR Status": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Guardrails_CheckQuestions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardrails": {
+      "main": [
+        [
+          {
+            "node": "Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Output": {
+      "main": [
+        []
+      ]
+    },
+    "Failed Message": {
+      "main": [
+        [
+          {
+            "node": "Output_TopicAlignment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardrails_CheckQuestions": {
+      "main": [
+        [
+          {
+            "node": "Guardrails",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Failed Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Guardrails_CheckQuestions",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Failed Message1": {
+      "main": [
+        [
+          {
+            "node": "Output_Jailbreak",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Guardrails_CheckJailbreak",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardrails_CheckJailbreak": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Failed Message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2d7acd63-503a-42ed-9712-5feffcba06a1",
+  "meta": {
+    "templateId": "rag-starter-template",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5b100b8c13b6c08707d08e1ed6727afc75aac27706121e21fa522dc1f7743d70"
+  },
+  "id": "1n9XEJtRNq6RBctC",
+  "tags": [
+    {
+      "updatedAt": "2025-03-03T07:00:37.525Z",
+      "createdAt": "2025-03-03T07:00:37.525Z",
+      "id": "GecGnMuDSUOuM6cE",
+      "name": "RAG"
+    }
+  ]
+}

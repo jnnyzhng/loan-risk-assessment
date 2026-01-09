@@ -1,0 +1,87 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+credentials.json
+config.json
+
+# API Keys & Credentials
+**/credentials/
+**/*credentials*.json
+**/*apikey*.txt
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# n8n
+.n8n/
+n8n-local.db
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-project
+.sublime-workspace
+
+# Temporary Files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Backup Files
+*.bak
+*.backup
+*~
+
+# Compressed Files (optional - uncomment if needed)
+# *.zip
+# *.tar.gz
+# *.rar
+
+# Build & Distribution
+dist/
+build/
+*.bundle.js
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Python (if any Python scripts are added)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Personal Notes
+NOTES.md
+TODO.md
+scratch/

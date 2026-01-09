@@ -1,0 +1,1 @@
+INSERT INTO "public"."Government_PR_Status" ("ID", "Name", "Email", "PR Status") VALUES ('2222', 'Matt', 'matt@yahoo.com', 'true'), ('4444', 'Andy', 'andy@gmail.com', 'false');
