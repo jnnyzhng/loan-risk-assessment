@@ -182,4 +182,6 @@ This project is for educational purposes as part of NYP Assignment 122.
 
 ## Contributors
 
-NYP Assignment Team - 2025
+NYP Assignment Team :
+Jonny Zhong
+George Tan
